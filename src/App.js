@@ -9,6 +9,14 @@ import GameCatalog from './components/GameCatalog';
 
 
 function App() {
+    const routes = {
+        '/home': WelcomeWorld,
+        '/games': GameCatalog,
+        '/create-game': CreateGame,
+        '/login': Login,
+        '/register': Register,
+    };
+
     return (
         <div id="box">
 
