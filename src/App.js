@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import Header from './components/Header';
 import WelcomeWorld from './components/WelcomeWorld';
 import Login from './components/Login';
@@ -9,29 +11,29 @@ import GameCatalog from './components/GameCatalog';
 
 
 function App() {
+
+    const [page, setPage] = useState('/home');
+
     const routes = {
-        '/home': WelcomeWorld,
-        '/games': GameCatalog,
-        '/create-game': CreateGame,
-        '/login': Login,
-        '/register': Register,
+        '/home': <WelcomeWorld />,
+        '/games': <GameCatalog />,
+        '/create-game': <CreateGame />,
+        '/login': <Login />,
+        '/register': <Register />,
+    };
+
+    const navigationChangeHandler = (path) => {
+        setPage(path); 
     };
 
     return (
         <div id="box">
 
-            <Header />
+            <Header navigationChangeHandler={navigationChangeHandler} />
 
             <main id="main-content">
-                <WelcomeWorld />
+                { routes[page] || <h2>404 No Page Found!</h2> }
             </main>
-
-            <Login />
-            <Register />
-            <CreateGame />
-            <EditGame />
-            <GameDetails />
-            <GameCatalog />
 
         </div>
     );
