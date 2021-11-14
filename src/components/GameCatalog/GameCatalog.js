@@ -3,7 +3,9 @@ import GameCard from './GameCard';
 import * as gameService from '../../services/gameService';
 
 
-const GameCatalog = () => {
+const GameCatalog = ({
+    navigationChangeHandler
+}) => {
     const [games, setGames] = useState([]);
     // const [loading, setLoading] = useState(false);
 
@@ -14,7 +16,7 @@ const GameCatalog = () => {
                 .then(result => {
                     setGames(result);
                     // setLoading(false);
-                })
+                });
         }, 1000);
     }, []);
 
@@ -24,7 +26,7 @@ const GameCatalog = () => {
             <h1>All Games</h1>
 
             { games.length > 0
-                ? games.map(x => <GameCard key={x._id} game={x} />)
+                ? games.map(x => <GameCard key={x._id} game={x} navigationChangeHandler={navigationChangeHandler} />)
                 : <h3 className="no-articles">No games yet</h3>
             }
 

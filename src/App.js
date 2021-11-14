@@ -15,16 +15,25 @@ function App() {
 
     const [page, setPage] = useState('/home');
 
-    const routes = {
-        '/home': <WelcomeWorld />,
-        '/games': <GameCatalog />,
-        '/create-game': <CreateGame />,
-        '/login': <Login />,
-        '/register': <Register />,
+    const navigationChangeHandler = (path) => {
+        setPage(path);
     };
 
-    const navigationChangeHandler = (path) => {
-        setPage(path); 
+    const router = (path) => {
+        let pathNames = path.split('/');
+        let rootPath = pathNames[1];
+        let argument = pathNames[2];
+
+        const routes = {
+            'home': <WelcomeWorld />,
+            'games': <GameCatalog navigationChangeHandler={navigationChangeHandler} />,
+            'create-game': <CreateGame />,
+            'login': <Login />,
+            'register': <Register />,
+            'details': <GameDetails id={argument} />,
+        };
+
+        return routes[rootPath];
     };
 
     return (
@@ -33,7 +42,7 @@ function App() {
             <Header navigationChangeHandler={navigationChangeHandler} />
 
             <main id="main-content">
-                { routes[page] || <ErrorPage /> }
+                {router(page) || <ErrorPage />}
             </main>
 
         </div>

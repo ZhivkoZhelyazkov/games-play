@@ -1,6 +1,6 @@
 const ErrorPage = ({children}) => {
     return (
-        <section id="catalog-page">
+        <section id="catalog-page error-page">
             <h1>404</h1>
             <h1>Page Not Found</h1>
 
