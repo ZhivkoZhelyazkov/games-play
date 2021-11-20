@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react';
 import * as gameService from '../services/gameService';
 
 const GameDetails = ({
-    id,
+    match,
 }) => {
+    let id = match.params.gameId;
     const [game, setGame] = useState({});
 
     useEffect(async () => {
@@ -17,7 +18,7 @@ const GameDetails = ({
             <div className="info-section">
 
                 <div className="game-header">
-                    <img className="game-img" src={game.imageUrl} />
+                    <img className="game-img" src={game.imageUrl} alt="game-img"/>
                     <h1>{game.title}</h1>
                     <span className="levels">MaxLevel: {game.maxLevel}</span>
                     <p className="type">{game.category}</p>

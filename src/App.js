@@ -1,50 +1,41 @@
-import { useState } from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Header from './components/Header';
 import WelcomeWorld from './components/WelcomeWorld';
+import GameCatalog from './components/GameCatalog/GameCatalog';
+import CreateGame from './components/CreateGame';
 import Login from './components/Login';
 import Register from './components/Register';
-import CreateGame from './components/CreateGame';
-import EditGame from './components/EditGame';
 import GameDetails from './components/GameDetails';
-import GameCatalog from './components/GameCatalog/GameCatalog';
+import EditGame from './components/EditGame';
 import ErrorPage from './components/ErrorPage';
 
 
 function App() {
-
-    const [page, setPage] = useState('/home');
-
-    const navigationChangeHandler = (path) => {
-        setPage(path);
-    };
-
-    const router = (path) => {
-        let pathNames = path.split('/');
-        let rootPath = pathNames[1];
-        let argument = pathNames[2];
-
-        const routes = {
-            'home': <WelcomeWorld navigationChangeHandler={navigationChangeHandler} />,
-            'games': <GameCatalog navigationChangeHandler={navigationChangeHandler} />,
-            'create-game': <CreateGame />,
-            'login': <Login />,
-            'register': <Register />,
-            'details': <GameDetails id={argument} />,
-        };
-
-        return routes[rootPath];
-    };
-
     return (
         <div id="box">
-
-            <Header navigationChangeHandler={navigationChangeHandler} />
+            <Header />
 
             <main id="main-content">
-                {router(page) || <ErrorPage />}
-            </main>
+                <Switch>
+                    <Route path="/" exact component={WelcomeWorld} />
+                    <Route path="/games" exact component={GameCatalog} />
+                    <Route path="/create-game" component={CreateGame} />
+                    <Route path="/login" component={Login} />
+                    <Route path="/register" component={Register} />
+                    <Route path="/games/:gameId" component={GameDetails} />
+                    <Route path="/custom">
+                        <h2>Custom Page</h2>
+                        <p>Nesho si</p>
+                    </Route>
+                    <Route path="/logout" render={(props) => {
+                        console.log("Logged Out!!!");
+                        
+                        return <Redirect to="/" />
+                    }} />
 
+                </Switch>
+            </main>
         </div>
     );
 }
